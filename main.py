@@ -11,7 +11,12 @@ class MyApp(Adw.Application):
         super().__init__(**kwargs)
         self.connect("activate", self.on_activate)
         self.settings = backend.Settings()
-        self.settings.Load()
+    
+        try:
+            self.settings.Load()
+        except FileNotFoundError:
+            # We don't care
+            print(f"[DEBUG] [MyApp]: Settings file not found...")
 
     def on_activate(self, app):
         # Create a Builder
@@ -93,7 +98,12 @@ if args.restore:
     raise SystemExit(0)
 elif args.inckey:
     settings = backend.Settings()
-    settings.Load()
+    try:
+        settings.Load()
+    except FileNotFoundError:
+        # We don't care
+        print(f"[DEBUG] [MyApp]: Settings file not found...")
+
 
     if settings.getKeyboardBacklight() == 3.0:
         settings.setKeyboardBacklight(0.0)
