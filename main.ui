@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.16.0 -->
+<interface>
+  <!-- interface-name main.ui -->
+  <requires lib="gtk" version="4.12"/>
+  <requires lib="libadwaita" version="1.3"/>
+  <object class="AdwPreferencesWindow" id="mainWindow">
+    <property name="title">Samsung Settings</property>
+    <child>
+      <object class="AdwPreferencesPage">
+        <property name="hexpand">True</property>
+        <property name="vexpand">True</property>
+        <child>
+          <object class="AdwPreferencesGroup" id="mainGroup">
+            <property name="title">Main Settings</property>
+            <property name="vexpand">True</property>
+            <child>
+              <object class="AdwActionRow" id="usbChg">
+                <property name="activatable-widget">usbChgButton</property>
+                <property name="subtitle">Enables charging devices via a special USB port while the device is powered off</property>
+                <property name="subtitle-lines">2</property>
+                <property name="title">USB Chaging</property>
+                <child>
+                  <object class="GtkSwitch" id="usbChgButton">
+                    <property name="valign">center</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow" id="perfMode">
+                <property name="activatable-widget">box</property>
+                <property name="subtitle">Determines what fan curve and frequency scaling to use</property>
+                <property name="subtitle-lines">2</property>
+                <property name="title">Performance Mode</property>
+                <child>
+                  <object class="GtkDropDown" id="box">
+                    <property name="model">performanceModeValues</property>
+                    <property name="selected">4294967294</property>
+                    <property name="valign">center</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow" id="kbdBacklight">
+                <property name="subtitle">Sets the keyboard backlight in intervals of 25 percent</property>
+                <property name="subtitle-lines">2</property>
+                <property name="title">Keyboard Backlight</property>
+                <child>
+                  <object class="GtkSpinButton" id="but">
+                    <property name="adjustment">
+                      <object class="GtkAdjustment">
+                        <property name="step-increment">1.0</property>
+                        <property name="upper">3.0</property>
+                      </object>
+                    </property>
+                    <property name="snap-to-ticks">True</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkStringList" id="performanceModeValues">
+    <property name="strings">Silent
+Quiet
+Optimized
+High Performance</property>
+  </object>
+  <object class="AdwMessageDialog" id="kmodNotFoundError">
+    <property name="body">Samsung-galaxybook kernel module is not loaded... settings will NOT take effect!
+See &lt;a href="https://github.com/joshuagrisham/samsung-galaxybook-extras"&gt;https://github.com/joshuagrisham/samsung-galaxybook-extras/tree/main&lt;/a&gt; on how to install it.</property>
+    <property name="body-use-markup">True</property>
+    <property name="default-response">Close</property>
+    <property name="default-width">-1</property>
+    <property name="heading">ERROR</property>
+    <property name="hexpand">True</property>
+    <property name="modal">True</property>
+    <property name="resizable">False</property>
+    <property name="transient-for">mainWindow</property>
+    <property name="width-request">700</property>
+    <!-- Custom fragments -->
+    <responses>
+      <response id="ack" translatable="yes">Ok</response>
+    </responses>
+  </object>
+</interface>
