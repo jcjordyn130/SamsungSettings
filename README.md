@@ -32,3 +32,7 @@ Additionally, the `-k`/`--inckey` parameter is used to increment the keyboard ba
 
 This is because, unlike most machines, the Samsung Galaxy Book series only has a backlight key on the keyboard
 that functions like that. It does NOT have keyboard brightness up and down keys as certain desktop environments assume.
+
+#### Dependencies
+The only external Python dependencies this script has is pydbus. 
+Otherwise, this script just depends on Python, it's stdlib, GTK4+ and libadwaita 1+.
