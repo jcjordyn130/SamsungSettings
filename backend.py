@@ -17,7 +17,7 @@ class Settings():
     settings = {
         "usbCharging": False,
         "perfMode": 0,
-        "kbdBacklight": 0.0
+        "kbdBacklight": 0,
     }
 
     def IsModuleLoaded(self):

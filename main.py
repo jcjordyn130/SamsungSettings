@@ -60,7 +60,7 @@ class MyApp(Adw.Application):
 
     def handleKeyboardBacklight(self, object):
         val = object.get_value()
-        self.settings.setKeyboardBacklight(val)
+        self.settings.setKeyboardBacklight(int(val))
         self.settings.Save()
 
     def handlePerformanceMode(self, obj, pspec):
@@ -105,8 +105,8 @@ elif args.inckey:
         print(f"[DEBUG] [MyApp]: Settings file not found...")
 
 
-    if settings.getKeyboardBacklight() == 3.0:
-        settings.setKeyboardBacklight(0.0)
+    if settings.getKeyboardBacklight() == 3:
+        settings.setKeyboardBacklight(0)
     else:
         settings.setKeyboardBacklight(settings.getKeyboardBacklight() + 1)
 
