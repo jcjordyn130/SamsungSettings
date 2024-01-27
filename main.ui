@@ -11,18 +11,23 @@
         <property name="hexpand">True</property>
         <property name="vexpand">True</property>
         <child>
-          <object class="AdwPreferencesGroup" id="mainGroup">
-            <property name="title">Main Settings</property>
-            <property name="vexpand">True</property>
+          <object class="AdwPreferencesGroup" id="generalGroup">
+            <property name="title">General</property>
             <child>
-              <object class="AdwActionRow" id="usbChg">
-                <property name="activatable-widget">usbChgButton</property>
-                <property name="subtitle">Enables charging devices via a special USB port while the device is powered off</property>
+              <object class="AdwActionRow" id="kbdBacklight">
+                <property name="activatable-widget">but</property>
+                <property name="subtitle">Sets the keyboard backlight in intervals of 25 percent</property>
                 <property name="subtitle-lines">2</property>
-                <property name="title">USB Chaging</property>
+                <property name="title">Keyboard Backlight</property>
                 <child>
-                  <object class="GtkSwitch" id="usbChgButton">
-                    <property name="valign">center</property>
+                  <object class="GtkSpinButton" id="but">
+                    <property name="adjustment">
+                      <object class="GtkAdjustment">
+                        <property name="step-increment">1.0</property>
+                        <property name="upper">3.0</property>
+                      </object>
+                    </property>
+                    <property name="snap-to-ticks">True</property>
                   </object>
                 </child>
               </object>
@@ -42,20 +47,48 @@
                 </child>
               </object>
             </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup" id="powerGroup">
+            <property name="title">Power</property>
             <child>
-              <object class="AdwActionRow" id="kbdBacklight">
-                <property name="subtitle">Sets the keyboard backlight in intervals of 25 percent</property>
+              <object class="AdwActionRow" id="usbChg">
+                <property name="activatable-widget">usbChgButton</property>
+                <property name="subtitle">Enables charging devices via a special USB port while the device is powered off</property>
                 <property name="subtitle-lines">2</property>
-                <property name="title">Keyboard Backlight</property>
+                <property name="title">USB Chaging</property>
                 <child>
-                  <object class="GtkSpinButton" id="but">
-                    <property name="adjustment">
-                      <object class="GtkAdjustment">
-                        <property name="step-increment">1.0</property>
-                        <property name="upper">3.0</property>
-                      </object>
-                    </property>
-                    <property name="snap-to-ticks">True</property>
+                  <object class="GtkSwitch" id="usbChgButton">
+                    <property name="valign">center</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow" id="batterySaver">
+                <property name="activatable-widget">batterySaverSwitch</property>
+                <property name="subtitle">Stops battery charging at 85%</property>
+                <property name="subtitle-lines">2</property>
+                <property name="title">Battery Saver</property>
+                <property name="use-markup">False</property>
+                <child>
+                  <object class="GtkSwitch" id="batterySaverSwitch">
+                    <property name="valign">center</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow" id="startOnLidOpen">
+                <property name="activatable-widget">startOnLidOpenSwitch</property>
+                <property name="subtitle">Boots up device on lid open</property>
+                <property name="subtitle-lines">2</property>
+                <property name="title">Start on Lid Open</property>
+                <property name="use-markup">False</property>
+                <child>
+                  <object class="GtkSwitch" id="startOnLidOpenSwitch">
+                    <property name="valign">center</property>
                   </object>
                 </child>
               </object>

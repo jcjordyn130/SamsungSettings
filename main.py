@@ -37,6 +37,14 @@ class MyApp(Adw.Application):
         self.kbdBacklight.connect("value-changed", self.handleKeyboardBacklight)
         self.kbdBacklight.set_value(self.settings.getKeyboardBacklight())
 
+        self.batterySaver = builder.get_object("batterySaverSwitch")
+        self.batterySaver.connect("state-set", self.handleBatterySaver)
+        self.batterySaver.set_state(self.settings.getBatterySaver())
+
+        self.startOnLidOpen = builder.get_object("startOnLidOpenSwitch")
+        self.startOnLidOpen.connect("state-set", self.handleStartOnLidOpen)
+        self.startOnLidOpen.set_state(self.settings.getStartOnLidOpen())
+
         # Obtain and show the main window
         self.win = builder.get_object("mainWindow")
         self.win.set_application(self)  # Application will close once it no longer has active windows attached to it
@@ -80,6 +88,28 @@ class MyApp(Adw.Application):
         self.settings.Save()
 
         # True stops other signals from emitting
+        return False
+
+    def handleBatterySaver(self, switch, state):
+        if state:
+            print(f"[DEBUG] Turning Battery Saver on!")
+        else:
+            print(f"[DEBUG] Turning Battery Saver off!")
+
+        self.settings.setBatterySaver(state)
+        self.settings.Save()
+
+        return False
+
+    def handleStartOnLidOpen(self, switch, state):
+        if state:
+            print(f"[DEBUG] Turning Start On Lid Open on!")
+        else:
+            print(f"[DEBUG] Turning Start On Lid Open off!")
+
+        self.settings.setStartOnLidOpen(state)
+        self.settings.Save()
+
         return False
 
 parser = argparse.ArgumentParser(prog = "SamsungSettings", description = "A clone of Samsung Settings for Linux using the samsung-galaxybook kernel module.")
