@@ -334,7 +334,7 @@ import os
 print(f"SamsungSettingsDaemon starting up! PID: {os.getpid()}")
 
 # Check for module
-if Settings.sysfiles["base"].exists():
+if not Settings.sysfiles["base"].exists():
     print(f"[ERROR]: samsung-galaxybook module is not loaded!")
     raise SystemExit(1)
 
