@@ -42,7 +42,8 @@
 	(1,49,"(external)","42",None,None,None,None,None,None),
 	(1,50,"(external)","43",None,None,None,None,None,None),
 	(1,51,"(external)","44",None,None,None,None,None,None),
-	(1,52,"(external)","45",None,None,None,None,None,None)
+	(1,52,"(external)","45",None,None,None,None,None,None),
+	(1,56,"AdwMessageDialog","daemonNotFoundError",None,None,None,None,-1,"  &lt;responses&gt;\n    &lt;response id=\"ack\" translatable=\"yes\"&gt;Ok&lt;/response&gt;\n  &lt;/responses&gt;")
   </object>
   <object_property>
 	(1,1,"GtkWindow","title","Samsung Settings",None,None,None,None,None,None,None,None,None),
@@ -92,6 +93,36 @@
 	(1,46,"AdwActionRow","subtitle-lines","2",None,None,None,None,None,None,None,None,None),
 	(1,46,"AdwPreferencesRow","title","Start on Lid Open",None,None,None,None,None,None,None,None,None),
 	(1,46,"AdwPreferencesRow","use-markup","False",None,None,None,None,None,None,None,None,None),
-	(1,47,"GtkWidget","valign","center",None,None,None,None,None,None,None,None,None)
+	(1,47,"GtkWidget","valign","center",None,None,None,None,None,None,None,None,None),
+	(1,53,"AdwMessageDialog","body","Samsung-galaxybook kernel module is not loaded... settings will NOT take effect!\nSee &lt;a href=\"https://github.com/joshuagrisham/samsung-galaxybook-extras\"&gt;https://github.com/joshuagrisham/samsung-galaxybook-extras/tree/main&lt;/a&gt; on how to install it.",None,None,None,None,None,None,None,None,None),
+	(1,53,"AdwMessageDialog","body-use-markup","True",None,None,None,None,None,None,None,None,None),
+	(1,53,"AdwMessageDialog","default-response","Close",None,None,None,None,None,None,None,None,None),
+	(1,53,"AdwMessageDialog","heading","ERROR",None,None,None,None,None,None,None,None,None),
+	(1,53,"GtkWidget","hexpand","True",None,None,None,None,None,None,None,None,None),
+	(1,53,"GtkWindow","default-width","-1",None,None,None,None,None,None,None,None,None),
+	(1,53,"GtkWindow","modal","True",None,None,None,None,None,None,None,None,None),
+	(1,53,"GtkWindow","resizable","False",None,None,None,None,None,None,None,None,None),
+	(1,54,"AdwMessageDialog","body","Samsung-galaxybook kernel module is not loaded... settings will NOT take effect!\nSee &lt;a href=\"https://github.com/joshuagrisham/samsung-galaxybook-extras\"&gt;https://github.com/joshuagrisham/samsung-galaxybook-extras/tree/main&lt;/a&gt; on how to install it.",None,None,None,None,None,None,None,None,None),
+	(1,54,"AdwMessageDialog","body-use-markup","True",None,None,None,None,None,None,None,None,None),
+	(1,54,"AdwMessageDialog","default-response","Close",None,None,None,None,None,None,None,None,None),
+	(1,54,"AdwMessageDialog","heading","ERROR",None,None,None,None,None,None,None,None,None),
+	(1,54,"GtkWidget","hexpand","True",None,None,None,None,None,None,None,None,None),
+	(1,54,"GtkWindow","default-width","-1",None,None,None,None,None,None,None,None,None),
+	(1,54,"GtkWindow","modal","True",None,None,None,None,None,None,None,None,None),
+	(1,54,"GtkWindow","resizable","False",None,None,None,None,None,None,None,None,None),
+	(1,55,"AdwMessageDialog","body","Samsung-galaxybook kernel module is not loaded... settings will NOT take effect!\nSee &lt;a href=\"https://github.com/joshuagrisham/samsung-galaxybook-extras\"&gt;https://github.com/joshuagrisham/samsung-galaxybook-extras/tree/main&lt;/a&gt; on how to install it.",None,None,None,None,None,None,None,None,None),
+	(1,55,"AdwMessageDialog","body-use-markup","True",None,None,None,None,None,None,None,None,None),
+	(1,55,"AdwMessageDialog","default-response","Close",None,None,None,None,None,None,None,None,None),
+	(1,55,"AdwMessageDialog","heading","ERROR",None,None,None,None,None,None,None,None,None),
+	(1,55,"GtkWidget","hexpand","True",None,None,None,None,None,None,None,None,None),
+	(1,55,"GtkWindow","default-width","-1",None,None,None,None,None,None,None,None,None),
+	(1,55,"GtkWindow","modal","True",None,None,None,None,None,None,None,None,None),
+	(1,55,"GtkWindow","resizable","False",None,None,None,None,None,None,None,None,None),
+	(1,56,"AdwMessageDialog","body","Samsung Settings Daemon not found on D-Bus at org.jordynsblog.SamsungSettings\nIs it running???",None,None,None,None,None,None,None,None,None),
+	(1,56,"AdwMessageDialog","body-use-markup","True",None,None,None,None,None,None,None,None,None),
+	(1,56,"AdwMessageDialog","heading","ERROR",None,None,None,None,None,None,None,None,None),
+	(1,56,"GtkWidget","hexpand","True",None,None,None,None,None,None,None,None,None),
+	(1,56,"GtkWidget","width-request","500",None,None,None,None,None,None,None,None,None),
+	(1,56,"GtkWindow","transient-for","1",None,None,None,None,None,None,None,None,None)
   </object_property>
 </cambalache-project>

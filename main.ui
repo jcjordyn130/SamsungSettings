@@ -121,4 +121,17 @@ See &lt;a href="https://github.com/joshuagrisham/samsung-galaxybook-extras"&gt;h
       <response id="ack" translatable="yes">Ok</response>
     </responses>
   </object>
+  <object class="AdwMessageDialog" id="daemonNotFoundError">
+    <property name="body">Samsung Settings Daemon not found on D-Bus at org.jordynsblog.SamsungSettings
+Is it running???</property>
+    <property name="body-use-markup">True</property>
+    <property name="heading">ERROR</property>
+    <property name="hexpand">True</property>
+    <property name="transient-for">mainWindow</property>
+    <property name="width-request">500</property>
+    <!-- Custom fragments -->
+    <responses>
+      <response id="ack" translatable="yes">Ok</response>
+    </responses>
+  </object>
 </interface>

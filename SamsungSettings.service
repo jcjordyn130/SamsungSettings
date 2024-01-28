@@ -1,0 +1,13 @@
+[Unit]
+Description=Samsung Settings Daemon for Linux
+Requires=dbus.socket
+After=dbus.socket
+
+[Service]
+Type=dbus
+ExecStart=/usr/local/bin/SamsungSettingsDaemon.py
+BusName=org.jordynsblog.SamsungSettingsDaemon
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target

@@ -1,2 +1,2 @@
 pydbus==0.6.0
-
+sdnotify[systemd]==0.3.2
