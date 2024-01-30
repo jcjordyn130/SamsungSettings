@@ -4,6 +4,8 @@ import pathlib
 import json
 from gi.repository import GLib, Gio
 import sys
+import argparse
+import os 
 
 try:
     import sdnotify
@@ -308,7 +310,7 @@ class Daemon():
     def usbCharging(self, value):
         self.ignoresyschanges = True
         self.settings.setUSBCharging(value)
-        #self.ignoresyschanges = False
+        self.ignoresyschanges = False
         self.PropertiesChanged("org.jordynsblog.SamsungSettingsDaemon", {"usbCharging": value}, [])
         
     @property
@@ -356,13 +358,22 @@ class Daemon():
         self.PropertiesChanged("org.jordynsblog.SamsungSettingsDaemon", {"startOnLidOpen": value}, [])
 
 # Base code
-import os 
 print(f"SamsungSettingsDaemon starting up! PID: {os.getpid()}")
 
+# Argument handling
+parser = argparse.ArgumentParser(prog = "SamsungSettingsDaemon", description = "A clone of Samsung Settings for Linux using the samsung-galaxybook kernel module.")
+parser.add_argument("-s", "--settingsfile", default = "settings.json", help = "Path to settings.json file")
+parser.add_argument("-i", "--ignoremodule", action = "store_true", help = "Ignore check for the samsung-galaxybook kernel module (for development)")
+parser.add_argument("-S", "--disablesystemd", action = "store_true", help = "Disables systemd support even if sdnotify is installed and systemd is active")
+parser.add_argument("-w", "--disablewatch", action = "store_true", help = "Disables monitoring the /sys filesystem for changes outside of SamsungSettings")
+args = parser.parse_args()
+
 # Check for module
-if not Settings.sysfiles["base"].exists():
+if not Settings.sysfiles["base"].exists() and not args.ignoremodule:
     print(f"[ERROR]: samsung-galaxybook module is not loaded!")
     raise SystemExit(1)
+elif not Settings.sysfiles["base"].exists() and args.ignoremodule:
+    print(f"[NOTE]: samsung-galaxybook module is not loaded! Ignoring due to user command.")
 
 # Setup D-Bus
 bus = pydbus.SystemBus()
@@ -370,15 +381,18 @@ obj = Daemon()
 bus.publish("org.jordynsblog.SamsungSettingsDaemon", obj)
 
 # Setup /sys watch
-leddir = Gio.File.new_for_path("/sys/class/leds/samsung-galaxybook::kbd_backlight")
-basedir = Gio.File.new_for_path("/sys/bus/platform/devices/samsung-galaxybook")
-ledmonitor = leddir.monitor_directory(Gio.FileMonitorFlags(0), None)
-ledmonitor.connect("changed", obj.handle_file_change)
-basemonitor = leddir.monitor_directory(Gio.FileMonitorFlags(0), None)
-basemonitor.connect("changed", obj.handle_file_change)
+if not args.disablewatch:
+    leddir = Gio.File.new_for_path("/sys/class/leds/samsung-galaxybook::kbd_backlight")
+    basedir = Gio.File.new_for_path("/sys/bus/platform/devices/samsung-galaxybook")
+    ledmonitor = leddir.monitor_directory(Gio.FileMonitorFlags(0), None)
+    ledmonitor.connect("changed", obj.handle_file_change)
+    basemonitor = leddir.monitor_directory(Gio.FileMonitorFlags(0), None)
+    basemonitor.connect("changed", obj.handle_file_change)
+else:
+    print(f"[INFO]: Not setting up /sys watched due to user command!")
 
 # Notify systemd users
-if "sdnotify" in sys.modules:
+if "sdnotify" in sys.modules and not args.disablesystemd:
     print(f"[INFO]: Sending ready notification and PID to systemd!")
     notifier = sdnotify.SystemdNotifier()
     notifier.notify(f"MAINPID={os.getpid()}")
@@ -386,6 +400,8 @@ if "sdnotify" in sys.modules:
 
     # Setup systemd watchdog to ping every second
     GLib.timeout_add(1000, obj.ping_systemd, None)
+elif args.disablesystemd:
+    print(f"[INFO]: Disabling systemd support due to user command!")
 
 # Main loop
 # I figure since Glib's mainloop is needed for pydbus I might as well use it for
