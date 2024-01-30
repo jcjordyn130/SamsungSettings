@@ -4,7 +4,7 @@ LOCALPREFIX := /usr/local
 PREFIX := /usr
 
 install:
-	install -Dm 0755 SamsungSettings.py $(PREFIX)/bin
+	install -Dm 0755 SamsungSettings.py $(PREFIX)/bin/SamsungSettings.py
 	install -Dm 0644 SamsungSettings.ui $(PREFIX)/share/SamsungSettings/SamsungSettings.ui
 
 uninstall:
