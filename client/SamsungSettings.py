@@ -7,14 +7,15 @@ import argparse
 import pydbus
 
 class MyApp(Adw.Application):
-    def __init__(self, **kwargs):
+    def __init__(self, uifile, **kwargs):
         super().__init__(**kwargs)
+        self.uifile = uifile
         self.connect("activate", self.on_activate)
 
     def on_activate(self, app):
         # Create a Builder
         builder = Gtk.Builder()
-        builder.add_from_file("SamsungSettings.ui")
+        builder.add_from_file(self.uifile)
 
         # Grab D-Bus instance to the daemon
         bus = pydbus.SystemBus()
@@ -120,6 +121,7 @@ class MyApp(Adw.Application):
 parser = argparse.ArgumentParser(prog = "SamsungSettings", description = "A clone of Samsung Settings for Linux using the samsung-galaxybook kernel module.")
 parser.add_argument("-r", "--restore", action = "store_true", help = "Restores saved settings on module reload or a reboot.")
 parser.add_argument("-k", "--inckey", action = "store_true" , help = "Increments the keyboard backlight and wraps back around at 100 percent.")
+parser.add_argument("-u", "--uifile", default = "SamsungSettings.ui", help = "Sets the location for the UI file.")
 args = parser.parse_args()
 
 if args.restore:
@@ -144,5 +146,5 @@ elif args.inckey:
     proxy.Save()
 else:
     # run GTK
-    app = MyApp(application_id="org.jordynsblog.SamsungSettings")
-    app.run(sys.argv)
+    app = MyApp(uifile = args.uifile, application_id = "org.jordynsblog.SamsungSettings")
+    app.run([]) # We don't use GTK's argument parsing, so I'm passing it in a blank argv.
