@@ -43,14 +43,16 @@ There are a few command line switches that can be given though.
 
 ```
 $ python3 main.py --help
-usage: SamsungSettings [-h] [-r] [-k]
+usage: SamsungSettings [-h] [-r] [-k] [-u UIFILE]
 
 A clone of Samsung Settings for Linux using the samsung-galaxybook kernel module.
 
 options:
-  -h, --help     show this help message and exit
-  -r, --restore  Restores saved settings on module reload or a reboot.
-  -k, --inckey   Increments the keyboard backlight and wraps back around at 100 percent.
+  -h, --help            show this help message and exit
+  -r, --restore         Restores saved settings on module reload or a reboot.
+  -k, --inckey          Increments the keyboard backlight and wraps back around at 100 percent.
+  -u UIFILE, --uifile UIFILE
+                        Sets the location for the UI file.
 ```
 
 The `-r`/`--restore` parameter is used to restore saved settings on module reload or reboot
@@ -63,3 +65,5 @@ Additionally, the `-k`/`--inckey` parameter is used to increment the keyboard ba
 
 This is because, unlike most machines, the Samsung Galaxy Book series only has a backlight key on the keyboard
 that that adjusts the brightness and wraps around. It does NOT have keyboard brightness up and down keys as certain desktop environments assume.
+
+The `-u`/`--uifile` parameter is used to pass a custom location of the .ui file to `Gtk.Builder()`. Normally, this wouldn't be needed, but I haven't quite figured out where to put that file that's clean... well, other than sticking it in SamsungSettings.py as a string.
