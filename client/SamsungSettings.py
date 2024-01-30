@@ -14,7 +14,7 @@ class MyApp(Adw.Application):
     def on_activate(self, app):
         # Create a Builder
         builder = Gtk.Builder()
-        builder.add_from_file("main.ui")
+        builder.add_from_file("SamsungSettings.ui")
 
         # Grab D-Bus instance to the daemon
         bus = pydbus.SystemBus()
