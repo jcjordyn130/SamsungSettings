@@ -230,6 +230,8 @@ class Daemon():
         except FileNotFoundError:
             print(f"[DEBUG] settings.json not found!")
 
+        self.ignoresyschanges = False
+
     def handle_file_change(self, monitor, file1, file2, evt_type):
         if evt_type != Gio.FileMonitorEvent.CHANGED:
             print("handle_file_change called with unneeded event... skipping!")
@@ -237,6 +239,10 @@ class Daemon():
 
         # File2 is only used during a move which cannot happen on /sys filesystems.
         path = file1.get_path()
+
+        if self.ignoresyschanges:
+            print(f"Ignoring changed file {path} as ignoresyschanges is True!")
+            return
 
         if path == self.settings.sysfiles["usbchg"]:
             newval = int(self.settings.sysfiles["usbchg"].read_text())
@@ -290,7 +296,9 @@ class Daemon():
 
     @usbCharging.setter
     def usbCharging(self, value):
+        self.ignoresyschanges = True
         self.settings.setUSBCharging(value)
+        #self.ignoresyschanges = False
         self.PropertiesChanged("org.jordynsblog.SamsungSettingsDaemon", {"usbCharging": value}, [])
         
     @property
@@ -299,7 +307,9 @@ class Daemon():
 
     @perfMode.setter
     def perfMode(self, value):
+        self.ignoresyschanges = True
         self.settings.setPerfMode(value)
+        self.ignoresyschanges = False
         self.PropertiesChanged("org.jordynsblog.SamsungSettingsDaemon", {"perfMode": value}, [])
 
     @property
@@ -308,7 +318,9 @@ class Daemon():
 
     @kbdBacklight.setter
     def kbdBacklight(self, value):
+        self.ignoresyschanges = True
         self.settings.setKeyboardBacklight(value)
+        self.ignoresyschanges = False
         self.PropertiesChanged("org.jordynsblog.SamsungSettingsDaemon", {"kbdBacklight": value}, [])
 
     @property
@@ -317,7 +329,9 @@ class Daemon():
 
     @batterySaver.setter
     def batterySaver(self, value):
+        self.ignoresyschanges = True
         self.settings.setBatterySaver(value)
+        self.ignoresyschanges = False
         self.PropertiesChanged("org.jordynsblog.SamsungSettingsDaemon", {"batterySaver": value}, [])
 
     @property
@@ -326,7 +340,9 @@ class Daemon():
 
     @startOnLidOpen.setter
     def startOnLidOpen(self, value):
+        self.ignoresyschanges = True
         self.settings.setStartOnLidOpen(value)
+        self.ignoresyschanges = False
         self.PropertiesChanged("org.jordynsblog.SamsungSettingsDaemon", {"startOnLidOpen": value}, [])
 
 # Base code
