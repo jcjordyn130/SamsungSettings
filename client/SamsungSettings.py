@@ -1,3 +1,4 @@
+#!/bin/env python3
 import sys
 import gi
 gi.require_version('Gtk', '4.0')
