@@ -280,10 +280,20 @@ class Daemon():
 
     def Load(self):
         self.settings.Load()
+        self.PropertiesChanged("org.jordynsblog.SamsungSettingsDaemon", {"usbCharging": self.settings.getUSBCharging(),
+        "perfMode": self.settings.getPerfMode(),
+        "kbdBacklight": self.settings.getKeyboardBacklight(),
+        "batterySaver": self.settings.getBatterySaver(),
+        "startOnLidOpen": self.settings.getStartOnLidOpen()}, [])
         return "true"
 
     def Restore(self):
         self.settings.Restore()
+        self.PropertiesChanged("org.jordynsblog.SamsungSettingsDaemon", {"usbCharging": self.settings.getUSBCharging(),
+        "perfMode": self.settings.getPerfMode(),
+        "kbdBacklight": self.settings.getKeyboardBacklight(),
+        "batterySaver": self.settings.getBatterySaver(),
+        "startOnLidOpen": self.settings.getStartOnLidOpen()}, [])
         return "true"
 
     @property
