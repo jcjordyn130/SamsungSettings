@@ -26,7 +26,7 @@ class MyApp(Adw.Application):
             daemonNotFoundDialog.connect("response", lambda dialog, response: exit(1))
             daemonNotFoundDialog.set_application(self)
             daemonNotFoundDialog.present()
-            return
+            raise SystemExit(1)
 
         # Connect Setting widgets to their proper handlers and sync with the
         # settings file.
