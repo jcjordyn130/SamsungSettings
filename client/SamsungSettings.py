@@ -6,6 +6,8 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw
 import argparse
 import pydbus
+import os
+import pathlib
 
 class MyApp(Adw.Application):
     def __init__(self, uifile, **kwargs):
@@ -13,10 +15,45 @@ class MyApp(Adw.Application):
         self.uifile = uifile
         self.connect("activate", self.on_activate)
 
+    def __searchForUIFile__(self):
+        """ __searchForUIFile__() does exactly what it says on the tin.
+
+        It searchs for the UI description file using three methods and returns it
+        as a Pathlib.Path object if found.
+
+        If it is NOT found using any of the available methods, then it raises
+        a SystemExit(1) exception.
+        """
+        # List of Path() objects representing XDG data directories.
+        datapaths = [pathlib.Path(x) for x in os.getenv("XDG_DATA_DIRS", "").split(":")]
+
+        # Path 1: Check explicitly given paths
+        if self.uifile and self.uifile.exists():
+            print(f"[DEBUG] [MyApp] Using explicitly given path ({self.uifile}) for UI file!")
+            return self.uifile
+
+        # Path 2: Search all of XDG_DATA_DIRS for it
+        for datapath in datapaths:
+            uifile = datapath / "SamsungSettings" / "SamsungSettings.ui"
+            if uifile.exists():
+                print(f"[DEBUG] [MyApp] Using {uifile} found using XDG_DATA_DIRS!")
+                return uifile
+            else:
+                print(f"[DEBUG] [MyApp] Not using {uifile} because it doesn't exist!")
+        
+        # Path 3: It hasn't been found any other way so far... let's just use the one in the current directory.
+        uifile = pathlib.Path("SamsungSettings.ui")
+        if uifile.exists():
+            print(f"[DEBUG] [MyApp] Using default UI file path of the current directory!")
+            return uifile
+        else:
+            print(f"[ERROR] [MyApp] UI file not found using any of the above attempts... exiting!")
+            raise SystemExit(1)
+
     def on_activate(self, app):
         # Create a Builder
         builder = Gtk.Builder()
-        builder.add_from_file(self.uifile)
+        builder.add_from_file(str(self.__searchForUIFile__()))
 
         # Grab D-Bus instance to the daemon
         bus = pydbus.SystemBus()
@@ -122,7 +159,7 @@ class MyApp(Adw.Application):
 parser = argparse.ArgumentParser(prog = "SamsungSettings", description = "A clone of Samsung Settings for Linux using the samsung-galaxybook kernel module.")
 parser.add_argument("-r", "--restore", action = "store_true", help = "Restores saved settings on module reload or a reboot.")
 parser.add_argument("-k", "--inckey", action = "store_true" , help = "Increments the keyboard backlight and wraps back around at 100 percent.")
-parser.add_argument("-u", "--uifile", default = "SamsungSettings.ui", help = "Sets the location for the UI file.")
+parser.add_argument("-u", "--uifile", required = False, type = pathlib.Path, help = "Sets the location for the UI file.")
 args = parser.parse_args()
 
 if args.restore:
